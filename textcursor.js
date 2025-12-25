@@ -74,13 +74,16 @@ export class TextCursor {
   }
   static text2max_width = {};
   constructor(elem, text, quadrant) {
-    // Accept selector string or DOM element
-    this.elem = typeof elem === 'string' ? document.querySelector(elem) : elem;
+    if (typeof elem === 'string') {
+      this.elem = document.querySelector(elem);
+    } else {
+      this.elem = elem;
+    }
     if (!this.elem) {
-      console.warn(`TextCursor: element not found`, elem);
+      console.warn('TextCursor: element not found', elem);
     }
     this.cache = {};
-    this.quadrant = quadrant || 'TL';  // default quadrant
+    this.quadrant = quadrant || 'TL';
     this.paused = false;
     this.last_text = "";
     if (text) {
